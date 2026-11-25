@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load dph_tags %}
+{% block titulo %}{{ area.titulo }}{% endblock %}
+{% block contenido %}
+<div class="d-flex justify-content-between align-items-end flex-wrap mb-2">
+  <h1 class="dph-titulo"><i class="bi {{ area.icono }}"></i> {{ area.titulo }} <small class="text-muted fs-6">{{ area.descripcion }}</small></h1>
+  <span class="small text-muted">corte {{ ctx.corte|date:"d/m/Y" }}{% if ctx.empresa %} · {{ ctx.empresa }}{% endif %}{% if ctx.proyecto %} · {{ ctx.proyecto.nombre }}{% endif %}</span>
+</div>
+<div class="kpi-grid mb-3">
+  {% for r in resultados %}{% kpi_card r qs %}{% endfor %}
+</div>
+{% include "dashboard/_contenido.html" %}
+{% endblock %}

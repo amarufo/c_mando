@@ -1,0 +1,30 @@
+{% load dph_tags %}
+<div class="col-12 col-xl-{{ t.ancho }}">
+    <div class="card dph-card h-100">
+        <div class="card-body">
+            <h2 class="dph-sub">{{ t.titulo }}</h2>
+            <div class="table-responsive">
+                <table class="table table-sm dph-tabla align-middle">
+                    <thead>
+                        <tr>{% for c in t.columnas %}<th>{{ c }}</th>{% endfor %}</tr>
+                    </thead>
+                    <tbody>
+                        {% for fila in t.filas %}<tr>
+                            {% for celda in fila %}
+                            <td>
+                                {% with e=celda|celda_estado %}
+                                {% if e %}<span class="chip chip-{{ e }}">{{ celda|celda_texto }}</span>
+                                {% else %}{{ celda }}{% endif %}
+                                {% endwith %}
+                            </td>
+                            {% endfor %}
+                        </tr>{% empty %}<tr>
+                            <td colspan="{{ t.columnas|length }}" class="text-muted">Sin datos para el filtro elegido.
+                            </td>
+                        </tr>{% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

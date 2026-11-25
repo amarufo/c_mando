@@ -1,0 +1,13 @@
+{% load dph_tags %}
+{% for n in contenido.notas %}<p class="small text-muted mb-2"><i class="bi bi-info-circle"></i> {{ n }}</p>{% endfor %}
+<div class="row g-3">
+    {% for t in contenido.tablas %}{% if t.ancho == 12 %}{% include "dashboard/_tabla.html" %}{% endif %}{% endfor %}
+    {% for g in contenido.graficos %}
+    <div class="col-12 col-xl-{{ g.ancho }}">
+        <div class="card dph-card h-100">
+            <div class="card-body p-2">{{ g.html|safe }}</div>
+        </div>
+    </div>
+    {% endfor %}
+    {% for t in contenido.tablas %}{% if t.ancho != 12 %}{% include "dashboard/_tabla.html" %}{% endif %}{% endfor %}
+</div>

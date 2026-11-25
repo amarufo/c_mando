@@ -1,0 +1,11 @@
+{% load dph_tags %}
+<a class="kpi-card kpi-{{ r.estado }}" href="{% url_con_filtros 'kpi_detalle' qs r.definicion.codigo %}"
+    title="{{ r.definicion.formula }}">
+    <div class="kpi-cab">
+        <span class="kpi-codigo">{{ r.definicion.codigo }}</span>
+        <span class="kpi-estado">{{ r.estado|etiqueta_estado }}</span>
+    </div>
+    <div class="kpi-nombre">{{ r.definicion.nombre }}</div>
+    <div class="kpi-valor">{{ r|valor_kpi }}</div>
+    <div class="kpi-nota">{{ r.nota|default:"&nbsp;" }}</div>
+</a>

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load dph_tags %}
+{% block titulo %}Diccionario de KPI{% endblock %}
+{% block contenido %}
+<h1 class="dph-titulo">Diccionario de KPI</h1>
+<p class="text-muted">Cada indicador con su fórmula, fuente, frecuencia y umbrales de semáforo. Esta tabla se genera automáticamente desde el código: lo que se ve aquí es lo que se calcula.
+Los umbrales se pueden cambiar en el administrador (Configuración de KPI) sin tocar el código.</p>
+{% for area, filas in grupos %}
+<h2 class="dph-sub mt-4"><i class="bi {{ area.icono }}"></i> {{ area.titulo }}</h2>
+<div class="table-responsive"><table class="table table-sm dph-tabla align-middle">
+  <thead><tr><th>Código</th><th>Indicador</th><th>Fórmula</th><th>Fuente</th><th>Mejor</th><th>Atención</th><th>Crítico</th><th>Frec.</th><th>Prior.</th></tr></thead>
+  <tbody>
+  {% for f in filas %}<tr>
+    <td><a href="{% url 'kpi_detalle' f.d.codigo %}"><strong>{{ f.d.codigo }}</strong></a></td>
+    <td>{{ f.d.nombre }}{% if f.d.descripcion %}<div class="small text-muted">{{ f.d.descripcion }}</div>{% endif %}</td>
+    <td class="small">{{ f.d.formula }}</td><td class="small">{{ f.d.fuente }}</td>
+    <td>{% if f.d.direccion == "mayor" %}más alto{% elif f.d.direccion == "menor" %}más bajo{% else %}—{% endif %}</td>
+    <td>{{ f.alerta|formato_umbral:f.d.unidad }}</td><td>{{ f.critico|formato_umbral:f.d.unidad }}</td>
+    <td>{{ f.d.frecuencia }}</td><td>{{ f.d.prioridad }}</td>
+  </tr>{% endfor %}
+  </tbody></table></div>
+{% endfor %}
+{% endblock %}

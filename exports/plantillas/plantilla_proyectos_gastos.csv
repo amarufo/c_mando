@@ -1,0 +1,2 @@
+﻿id_gasto,cc2,codigo_categoria,fecha,fecha_pago_real,estado,naturaleza,tipo_gasto,proveedor_ruc,proveedor,concepto,moneda,monto,con_igv,tc,nro_orden,id_comprobante
+017-000123,017,01.02.03,2026-10-15,2026-10-16,PAGADO,REAL,OPERATIVO,20123456789,Proveedor de ejemplo SAC,Compra de cemento,PEN,1180.00,SI,1,OC-DPHC-2026-0123,20123456789|F001-123

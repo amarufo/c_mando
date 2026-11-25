@@ -1,0 +1,2 @@
+﻿id_prestamo,n_cuota,fecha_vencimiento,saldo_inicial,interes,capital,otros_costos,total_cuota
+FIN-BBVA-001,1,2026-02-15,300000,4500,7000,50,11550

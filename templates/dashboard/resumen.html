@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load dph_tags %}
+{% block titulo %}Resumen{% endblock %}
+{% block contenido %}
+<div class="d-flex justify-content-between align-items-end flex-wrap mb-2">
+  <h1 class="dph-titulo">Resumen gerencial <small class="text-muted fs-6">corte {{ ctx.corte|date:"d/m/Y" }}</small></h1>
+  <div class="resumen-conteo">
+    <span class="chip chip-ok">{{ conteo.ok }} en meta</span>
+    <span class="chip chip-alerta">{{ conteo.alerta }} en atención</span>
+    <span class="chip chip-critico">{{ conteo.critico }} críticos</span>
+    <span class="chip chip-sin_datos">{{ conteo.sin_datos }} sin datos</span>
+    <span class="small text-muted">de {{ total_kpi }} indicadores</span>
+  </div>
+</div>
+
+{% for area, resultados in grupos %}
+<h2 class="dph-sub mt-3"><i class="bi {{ area.icono }}"></i> <a href="{% url_con_filtros 'area' qs area.slug %}">{{ area.titulo }}</a></h2>
+<div class="kpi-grid">
+  {% for r in resultados %}{% kpi_card r qs %}{% endfor %}
+</div>
+{% endfor %}
+
+<div class="row g-3 mt-1">
+  <div class="col-12 col-xl-5">
+    <div class="card dph-card h-100"><div class="card-body">
+      <h2 class="dph-sub"><i class="bi bi-exclamation-triangle"></i> Alertas ({{ total_alertas }})</h2>
+      {% if alertas %}
+      <ul class="lista-alertas">
+        {% for r in alertas %}
+        <li><span class="chip chip-{{ r.estado }}">{{ r.estado|etiqueta_estado }}</span>
+          <a href="{% url_con_filtros 'kpi_detalle' qs r.definicion.codigo %}"><strong>{{ r.definicion.codigo }}</strong> {{ r.definicion.nombre }}</a>: {{ r|valor_kpi }}
+          <div class="small text-muted">{{ r.nota }}</div></li>
+        {% endfor %}
+      </ul>
+      {% else %}<p class="text-muted">Sin alertas para el filtro elegido.</p>{% endif %}
+    </div></div>
+  </div>
+  {% for g in graficos %}
+  <div class="col-12 col-xl-{% if forloop.first %}7{% else %}6{% endif %}"><div class="card dph-card h-100"><div class="card-body p-2">{{ g.html|safe }}</div></div></div>
+  {% endfor %}
+</div>
+{% endblock %}

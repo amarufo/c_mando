@@ -1,0 +1,59 @@
+{% load static dph_tags %}
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block titulo %}Cuadro de mando{% endblock %} · DPH</title>
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap-icons/bootstrap-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dph.css' %}">
+    <script src="{% static 'plotly/plotly.min.js' %}"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg dph-nav">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'resumen' %}"><i class="bi bi-speedometer2"></i> Cuadro de mando <span
+                    class="dph-marca">DPH</span></a>
+            {% if user.is_authenticated %}
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu"><span
+                    class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link {% if activa == 'resumen' %}active{% endif %}"
+                            href="{% url_con_filtros 'resumen' qs %}"><i class="bi bi-grid-1x2"></i> Resumen</a></li>
+                    {% for a in areas_menu %}
+                    <li class="nav-item"><a class="nav-link {% if activa == a.slug %}active{% endif %}"
+                            href="{% url_con_filtros 'area' qs a.slug %}"><i class="bi {{ a.icono }}"></i>
+                            {{ a.titulo }}</a></li>
+                    {% endfor %}
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link {% if activa == 'diccionario' %}active{% endif %}"
+                            href="{% url 'diccionario' %}"><i class="bi bi-journal-text"></i> Diccionario de KPI</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link {% if activa == 'cargas' %}active{% endif %}"
+                            href="{% url 'cargas' %}"><i class="bi bi-upload"></i> Cargar datos</a></li>
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'logout' %}" class="d-inline">{% csrf_token %}
+                            <button class="btn btn-link nav-link" type="submit"><i class="bi bi-box-arrow-right"></i>
+                                Salir ({{ user.username }})</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <main class="container-fluid dph-main">
+        {% if mostrar_filtros %}{% include "dashboard/_filtros.html" %}{% endif %}
+        {% block contenido %}{% endblock %}
+    </main>
+    <footer class="dph-pie">De Peru Construcción SAC · Cuadro de mando · los datos de ejemplo son simulados</footer>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+
+</html>

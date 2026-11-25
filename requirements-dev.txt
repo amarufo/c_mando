@@ -1,0 +1,3 @@
+-r requirements.txt
+# Solo desarrollo local: PostgreSQL embebido (en Railway se usa el plugin de PostgreSQL).
+pixeltable-pgserver>=0.7

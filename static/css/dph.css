@@ -1,0 +1,246 @@
+/* Paleta y componentes del cuadro de mando. Los mismos colores están en apps/core/theme.py (gráficos). */
+:root {
+    --dph-primario: #0B3C5D;
+    --dph-secundario: #1D6FA5;
+    --dph-acento: #F2A900;
+    --dph-claro: #F4F6F8;
+    --dph-texto: #1F2933;
+    --dph-gris: #6B7785;
+    --estado-ok: #2E9E6B;
+    --estado-alerta: #F2A900;
+    --estado-critico: #D64545;
+    --estado-neutro: #6B7785;
+    --estado-sin_datos: #B8C0CC;
+    --estado-error: #8B1E1E;
+}
+
+body {
+    background: var(--dph-claro);
+    color: var(--dph-texto);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.dph-nav {
+    background: var(--dph-primario);
+}
+
+.dph-nav .navbar-brand,
+.dph-nav .nav-link {
+    color: #fff;
+}
+
+.dph-nav .nav-link {
+    opacity: .8;
+}
+
+.dph-nav .nav-link:hover,
+.dph-nav .nav-link.active {
+    opacity: 1;
+    box-shadow: inset 0 -3px 0 var(--dph-acento);
+}
+
+.dph-marca {
+    background: var(--dph-acento);
+    color: var(--dph-primario);
+    font-weight: 700;
+    padding: 0 .4rem;
+    border-radius: .25rem;
+    font-size: .8em;
+}
+
+.dph-main {
+    padding: 1rem 1.25rem 2rem;
+}
+
+.dph-pie {
+    text-align: center;
+    font-size: .75rem;
+    color: var(--dph-gris);
+    padding: 1rem;
+}
+
+.dph-titulo {
+    color: var(--dph-primario);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.dph-sub {
+    color: var(--dph-primario);
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.dph-sub a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.dph-card {
+    border: 0;
+    box-shadow: 0 1px 3px rgba(11, 60, 93, .12);
+    border-radius: .6rem;
+}
+
+.dph-btn {
+    background: var(--dph-primario);
+    color: #fff;
+}
+
+.dph-btn:hover {
+    background: var(--dph-secundario);
+    color: #fff;
+}
+
+.dph-filtros {
+    background: #fff;
+    border-radius: .6rem;
+    padding: .6rem .8rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(11, 60, 93, .12);
+}
+
+.dph-filtros .form-label {
+    font-size: .72rem;
+    color: var(--dph-gris);
+    margin-bottom: .1rem;
+}
+
+.dph-tabla th {
+    color: var(--dph-gris);
+    font-weight: 600;
+    font-size: .78rem;
+    text-transform: uppercase;
+}
+
+.dph-tabla td {
+    font-size: .88rem;
+}
+
+/* Tarjetas de KPI: la franja de color es el semáforo */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: .75rem;
+}
+
+.kpi-card {
+    display: block;
+    background: #fff;
+    border-radius: .6rem;
+    padding: .7rem .9rem;
+    text-decoration: none;
+    color: inherit;
+    border-left: 6px solid var(--dph-gris);
+    box-shadow: 0 1px 3px rgba(11, 60, 93, .12);
+    transition: transform .1s;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    color: inherit;
+}
+
+.kpi-ok {
+    border-left-color: var(--estado-ok);
+}
+
+.kpi-alerta {
+    border-left-color: var(--estado-alerta);
+}
+
+.kpi-critico {
+    border-left-color: var(--estado-critico);
+}
+
+.kpi-neutro {
+    border-left-color: var(--estado-neutro);
+}
+
+.kpi-sin_datos {
+    border-left-color: var(--estado-sin_datos);
+}
+
+.kpi-error {
+    border-left-color: var(--estado-error);
+}
+
+.kpi-cab {
+    display: flex;
+    justify-content: space-between;
+    font-size: .68rem;
+    text-transform: uppercase;
+    color: var(--dph-gris);
+}
+
+.kpi-codigo {
+    font-weight: 700;
+}
+
+.kpi-nombre {
+    font-size: .85rem;
+    font-weight: 600;
+    min-height: 2.2em;
+}
+
+.kpi-valor {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--dph-primario);
+    line-height: 1.1;
+}
+
+.kpi-nota {
+    font-size: .72rem;
+    color: var(--dph-gris);
+    min-height: 1.1em;
+}
+
+/* Etiquetas de estado */
+.chip {
+    display: inline-block;
+    padding: .1rem .5rem;
+    border-radius: 1rem;
+    font-size: .72rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--estado-neutro);
+}
+
+.chip-ok {
+    background: var(--estado-ok);
+}
+
+.chip-alerta {
+    background: var(--estado-alerta);
+    color: #3b2a00;
+}
+
+.chip-critico {
+    background: var(--estado-critico);
+}
+
+.chip-sin_datos {
+    background: var(--estado-sin_datos);
+    color: #333;
+}
+
+.chip-error {
+    background: var(--estado-error);
+}
+
+.lista-alertas {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lista-alertas li {
+    padding: .4rem 0;
+    border-bottom: 1px solid #E8ECF0;
+    font-size: .9rem;
+}
+
+.resumen-conteo .chip {
+    margin-right: .25rem;
+}

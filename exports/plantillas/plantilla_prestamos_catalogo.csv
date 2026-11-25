@@ -1,0 +1,2 @@
+﻿id_prestamo,ruc_deudor,es_personal,acreedor,tipo,moneda,capital,fecha_desembolso,tasa,tipo_tasa,sistema,n_cuotas,cc2_financiado,activo
+FIN-BBVA-001,20615105725,NO,BBVA,BANCO,PEN,300000,2026-01-15,20.1,TEA,FRANCES,36,,SI

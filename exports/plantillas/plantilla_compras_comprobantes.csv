@@ -1,0 +1,2 @@
+﻿ruc_empresa,ruc_proveedor,tipo_doc,serie_numero,nro_orden,cc2,cc1,fecha_doc,fecha_venc,moneda,tc,base_imponible,igv,total,total_logistica,detraccion_monto,retencion_garantia,fecha_registro,estado_pago,fecha_programada_pago,fecha_pago_real,nro_operacion
+20615105725,20123456789,FACTURA,F001-000123,OC-DPHC-2026-0039,017,OE.2.1,2026-10-20,2026-11-19,PEN,1,5000.00,900.00,5900.00,5900.00,0,0,2026-10-21,PROGRAMADO,2026-11-18,,

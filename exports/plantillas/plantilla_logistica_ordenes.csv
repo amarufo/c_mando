@@ -1,0 +1,2 @@
+﻿nro,tipo,ruc_empresa,cc2,cc1,ruc_proveedor,rq_origen,es_regularizacion,estado,estado_entrega,condicion_pago,moneda,tc,total,fecha_aprobacion_rq,fecha_emision,fecha_aprobacion
+OC-DPHC-2026-0039,OC,20615105725,017,OE.2.1,20123456789,RQ-DPHC-2026-0261,NO,POR_PAGAR,ENTREGADO,CREDITO_30,PEN,1,5900.00,2026-10-06,2026-10-07,2026-10-07

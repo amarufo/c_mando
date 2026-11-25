@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load dph_tags %}
+{% block titulo %}{{ d.codigo }} {{ d.nombre }}{% endblock %}
+{% block contenido %}
+<a href="{% url_con_filtros 'area' qs d.area %}" class="small"><i class="bi bi-arrow-left"></i> Volver al área</a>
+<h1 class="dph-titulo mt-1">{{ d.codigo }} · {{ d.nombre }}</h1>
+<div class="row g-3">
+  <div class="col-md-4">{% kpi_card r qs %}</div>
+  <div class="col-md-8">
+    <div class="card dph-card h-100"><div class="card-body">
+      <dl class="row mb-0 small">
+        <dt class="col-sm-3">Qué mide</dt><dd class="col-sm-9">{{ d.descripcion|default:d.nombre }}</dd>
+        <dt class="col-sm-3">Fórmula</dt><dd class="col-sm-9">{{ d.formula }}</dd>
+        <dt class="col-sm-3">Fuente de datos</dt><dd class="col-sm-9">{{ d.fuente }}</dd>
+        <dt class="col-sm-3">Semáforo</dt><dd class="col-sm-9">{% if d.direccion == "ninguna" %}Informativo (sin meta definida){% else %}
+          {% if d.direccion == "mayor" %}Más alto es mejor{% else %}Más bajo es mejor{% endif %}: atención en {{ r.definicion.umbral_alerta|formato_umbral:d.unidad }}, crítico en {{ r.definicion.umbral_critico|formato_umbral:d.unidad }} (valores por defecto; editables en el administrador){% endif %}</dd>
+        <dt class="col-sm-3">Frecuencia / prioridad</dt><dd class="col-sm-9">{% if d.frecuencia == "S" %}Semanal{% else %}Mensual{% endif %} · prioridad {{ d.prioridad }}</dd>
+      </dl>
+    </div></div>
+  </div>
+</div>
+{% if grafico %}<div class="card dph-card mt-3"><div class="card-body p-2">{{ grafico|safe }}</div></div>
+{% else %}<p class="text-muted mt-3 small">El historial aparece cuando se guardan al menos dos cierres: <code>python manage.py calcular_kpis</code>.</p>{% endif %}
+{% endblock %}

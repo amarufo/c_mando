@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block titulo %}Cargar datos{% endblock %}
+{% block contenido %}
+<h1 class="dph-titulo">Cargar datos</h1>
+<p class="text-muted">Actualización manual con los archivos limpios de cada oficina (estructura en <code>docs/parte1/07_archivos_limpios.md</code>).
+Si hay un solo error, <strong>no se guarda nada</strong> y se devuelve la lista de filas a corregir. La misma validación la usa la API para cargas automáticas.</p>
+
+<div class="row g-3">
+  <div class="col-lg-5">
+    <div class="card dph-card"><div class="card-body">
+      <h2 class="dph-sub">Subir archivo</h2>
+      <form method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="mb-3"><label class="form-label">Tabla</label>
+          <select name="tabla" class="form-select" required>
+            {% for i in importadores %}<option value="{{ i.slug }}">{{ i.area }} · {{ i.slug }}</option>{% endfor %}
+          </select></div>
+        <div class="mb-3"><label class="form-label">Archivo (.csv o .xlsx)</label>
+          <input type="file" name="archivo" class="form-control" accept=".csv,.xlsx" required></div>
+        <div class="form-check mb-3"><input class="form-check-input" type="checkbox" name="solo_validar" id="sv" value="1" checked>
+          <label class="form-check-label" for="sv">Solo validar (no guardar)</label></div>
+        <button class="btn dph-btn" type="submit"><i class="bi bi-upload"></i> Procesar</button>
+      </form>
+    </div></div>
+
+    {% if resultado %}
+    <div class="card dph-card mt-3"><div class="card-body">
+      {% if resultado.error %}<div class="alert alert-danger mb-0">{{ resultado.error }}</div>
+      {% else %}{% with c=resultado.carga %}
+        <h2 class="dph-sub">Resultado: {{ c.get_estado_display }}</h2>
+        <p class="mb-2">{{ c.filas_leidas }} filas leídas · {{ c.filas_ok }} válidas · {{ c.filas_error }} con error</p>
+        {% if c.errores %}
+        <div class="table-responsive" style="max-height:320px"><table class="table table-sm dph-tabla">
+          <thead><tr><th>Fila</th><th>Columna</th><th>Problema</th></tr></thead>
+          <tbody>{% for e in c.errores %}<tr><td>{{ e.fila }}</td><td>{{ e.columna }}</td><td>{{ e.error }}</td></tr>{% endfor %}</tbody></table></div>
+        {% elif c.estado == "SIMULACION" %}<div class="alert alert-info mb-0">El archivo es válido. Desmarque «Solo validar» para guardarlo.</div>
+        {% else %}<div class="alert alert-success mb-0">Datos guardados.</div>{% endif %}
+      {% endwith %}{% endif %}
+    </div></div>
+    {% endif %}
+  </div>
+
+  <div class="col-lg-7">
+    <div class="card dph-card"><div class="card-body">
+      <h2 class="dph-sub">Tablas disponibles y plantillas</h2>
+      <div class="table-responsive"><table class="table table-sm dph-tabla align-middle">
+        <thead><tr><th>Tabla</th><th>Qué contiene</th><th>Columnas</th><th></th></tr></thead>
+        <tbody>{% for i in importadores %}<tr>
+          <td><code>{{ i.slug }}</code></td><td class="small">{{ i.descripcion }}</td><td>{{ i.columnas|length }}</td>
+          <td><a href="{% url 'plantilla_csv' i.slug %}" title="Descargar plantilla"><i class="bi bi-download"></i></a></td>
+        </tr>{% endfor %}</tbody></table></div>
+    </div></div>
+    <div class="card dph-card mt-3"><div class="card-body">
+      <h2 class="dph-sub">Últimas cargas</h2>
+      <table class="table table-sm dph-tabla"><thead><tr><th>Fecha</th><th>Tabla</th><th>Filas</th><th>Resultado</th></tr></thead>
+      <tbody>{% for h in historial %}<tr><td>{{ h.fecha|date:"d/m H:i" }}</td><td>{{ h.tabla }}</td><td>{{ h.filas_ok }}/{{ h.filas_leidas }}</td><td>{{ h.get_estado_display }}</td></tr>
+      {% empty %}<tr><td colspan="4" class="text-muted">Aún no hay cargas.</td></tr>{% endfor %}</tbody></table>
+    </div></div>
+  </div>
+</div>
+{% endblock %}
